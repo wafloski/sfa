@@ -8,10 +8,10 @@ class Root extends Component {
     };
 
     componentDidMount() {
-        this.fetchFashionArticles('fashion');
+        this.fetchArticles('fashion');
     }
 
-    fetchFashionArticles = (type) => {
+    fetchArticles = (type) => {
         axios
             .get(`http://localhost:6010/articles/${type}`)
             .then(({data}) => {
