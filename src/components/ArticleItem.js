@@ -19,7 +19,7 @@ const imageStyles = {
 const ArticleItem = ({id, date, image, preamble, title}) => (
     <div className="wrapper" style={wrapperStyles}>
         <div className="image" style={imageColStyles}>
-            <img src={image} alt={id} style={imageStyles}/>
+            { image ? <img src={image} alt={id} style={imageStyles}/> : 'image not found :(' }
         </div>
         <div className="content" style={contentColStyles}>
             <h2>{title}</h2>
