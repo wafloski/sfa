@@ -2,21 +2,12 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import GlobalStyle from '../../theme/GlobalStyle';
 import ArticleItem from '../../components/ArticleItem';
+import Checkbox from '../../components/Checkbox';
 
 const Root = () => {
-    const defaultFilterSettings = [
-        {
-            name: 'fashion',
-            checked: true
-        },
-        {
-            name: 'sports',
-            checked: true
-        }
-    ];
+    const defaultFilterSettings = ['fashion','sports'];
 
     const [ articles, setArticles ] = useState([]);
-    const [ filters, setFilters ] = useState(defaultFilterSettings);
 
     useEffect(() => {
         fetchArticles()
@@ -38,43 +29,15 @@ const Root = () => {
             })
     };
 
-    const handleCheckboxChange = event => {
-        const currentFilter = filters.map(obj => {
-            if (obj.name === event.target.name) {
-                return {
-                    name: event.target.name,
-                    checked: !obj.checked
-                }
-            } else {
-                return obj
-            }
-        });
-        setFilters(
-            [...currentFilter]
-        )
-    };
-
-    const Checkbox = ({children, ...props}) => {
-        console.log(props);
-        return (
-            <label>
-                <input type="checkbox" {...props} />
-                {children}
-            </label>
-        )
-    };
-
     return (
         <>
             <GlobalStyle/>
-            { defaultFilterSettings.map(({name, checked}) => (
+            { defaultFilterSettings.map((type) => (
                 <Checkbox
-                    name={name}
-                    key={name}
-                    checked={checked}
-                    onChange={(event) => handleCheckboxChange(event)}
+                    name={type}
+                    key={type}
                 >
-                    {name}
+                    {type}
                 </Checkbox>
             ))}
             { articles.length ? articles.map(({id, date, image, preamble, title}) => (
@@ -89,6 +52,6 @@ const Root = () => {
             )) : <><h2>loading...</h2><h3>Please refresh the page if the application will not respond for a long time...</h3></> }
         </>
     );
-}
+};
 
 export default Root;
