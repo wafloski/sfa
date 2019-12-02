@@ -5,9 +5,20 @@ import ArticleItem from '../../components/ArticleItem';
 import Checkbox from '../../components/Checkbox';
 
 const Root = () => {
-    const defaultFilterSettings = ['fashion','sports'];
+    const defaultFilterSettings = [
+        {
+            name: 'fashion',
+            checked: true
+        },
+        {
+            name: 'sports',
+            checked: true
+        }
+    ];
 
     const [ articles, setArticles ] = useState([]);
+    const [ filters, setFilters ] = useState(defaultFilterSettings);
+    const [ sort, setSort ] = useState('newest');
 
     useEffect(() => {
         fetchArticles()
@@ -29,15 +40,30 @@ const Root = () => {
             })
     };
 
+    const checkboxChangeHandler = (name, isChecked) => {
+        const newFilters = filters.map(item => {
+            if ( item.name === name ) {
+                return {
+                    name,
+                    checked: isChecked
+                }
+            } else {
+                return item;
+            }
+        });
+        setFilters(newFilters);
+    };
+
     return (
         <>
             <GlobalStyle/>
-            { defaultFilterSettings.map((type) => (
+            { defaultFilterSettings.map(({name}) => (
                 <Checkbox
-                    name={type}
-                    key={type}
+                    name={name}
+                    key={name}
+                    checkboxChangeHandler={checkboxChangeHandler}
                 >
-                    {type}
+                    {name}
                 </Checkbox>
             ))}
             { articles.length ? articles.map(({id, date, image, preamble, title}) => (
