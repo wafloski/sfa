@@ -10,19 +10,10 @@ const ArticlesWrapper = styled.div`
 `;
 
 const Root = () => {
-    const defaultFilterSettings = [
-        {
-            name: 'fashion',
-            checked: true
-        },
-        {
-            name: 'sports',
-            checked: true
-        }
-    ];
+    const defaultFilters = ['fashion','sports'];
 
     const [ articles, setArticles ] = useState([]);
-    const [ filters, setFilters ] = useState(defaultFilterSettings);
+    const [ filters, setFilters ] = useState(defaultFilters);
     const [ sort, setSort ] = useState('newest');
 
     useEffect(() => {
@@ -45,30 +36,18 @@ const Root = () => {
             })
     };
 
-    const checkboxChangeHandler = (isChecked, name) => {
-        const newFilters = filters.map(item => {
-            if ( item.name === name ) {
-                return {
-                    name,
-                    checked: isChecked
-                }
-            } else {
-                return item;
-            }
-        });
-        setFilters(newFilters);
-    };
+    const checkboxChangeHandler = (isChecked, name) => isChecked ? setFilters([...filters, name]) : setFilters(filters.filter(item => item !== name));
 
     return (
         <>
             <GlobalStyle/>
-            { defaultFilterSettings.map(({name}) => (
+            { defaultFilters.map((item) => (
                 <Checkbox
-                    key={name}
-                    name={name}
+                    key={item}
+                    name={item}
                     onChange={checkboxChangeHandler}
                 >
-                    {name}
+                    {item}
                 </Checkbox>
             ))}
             <ArticlesWrapper>
