@@ -9,11 +9,11 @@ const ArticlesWrapper = styled.div`
   
 `;
 
-const Root = () => {
-    const defaultFilters = ['fashion','sports'];
+const defaultFilters = ['fashion','sport'];
 
+const Root = () => {
     const [ articles, setArticles ] = useState([]);
-    const [ filters, setFilters ] = useState(defaultFilters);
+    const [ activeFilters, setActiveFilters ] = useState(defaultFilters);
     const [ sort, setSort ] = useState('newest');
 
     useEffect(() => {
@@ -36,7 +36,7 @@ const Root = () => {
             })
     };
 
-    const checkboxChangeHandler = (isChecked, name) => isChecked ? setFilters([...filters, name]) : setFilters(filters.filter(item => item !== name));
+    const checkboxChangeHandler = (isChecked, name) => isChecked ? setActiveFilters([...activeFilters, name]) : setActiveFilters(activeFilters.filter(item => item !== name));
 
     return (
         <>
@@ -51,7 +51,8 @@ const Root = () => {
                 </Checkbox>
             ))}
             <ArticlesWrapper>
-            { articles.length ? articles.map(({id, date, image, preamble, title}) => (
+            { articles.length ? articles.map(({id, date, image, preamble, title, category}) => (
+                activeFilters.includes(category) &&
                 <ArticleItem
                     key={id}
                     id={id}
