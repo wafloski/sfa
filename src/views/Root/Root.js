@@ -6,35 +6,48 @@ import ArticleItem from '../../components/ArticleItem';
 import Checkbox from '../../components/Checkbox';
 import dateTransformer from '../../helpers/dateTransformHelper'
 
+const mobileWidth = '768px';
+
+const filtersWrapperWidth = '200px';
+
 const PageWrapper = styled.div`
-    margin: 3rem auto 0;
+    margin: 1rem auto 0;
     max-width: 1280px;
-`;
-
-const HeadWrapper = styled.div`
-    width: 100%;
     display: flex;
-    justify-content: flex-end;
-    margin-bottom: 3rem;
-`;
-
-const MainWrapper = styled.div`
-    display: flex;
+    flex-wrap: wrap;
 `;
 
 const ArticlesWrapper = styled.div`
-    width: calc(100% - 200px);
+    width: 100%;
+    padding: 2rem;
+    @media ( min-width: ${mobileWidth} ) {
+        width: calc(100% - ${filtersWrapperWidth});
+        order: 3;
+    }
 `;
 
 const FiltersWrapper = styled.div`
-    width: 200px;
+    width: 50%;
+    padding-left: 2rem;
+    @media ( min-width: ${mobileWidth} ) {
+        width: ${filtersWrapperWidth};
+        order: 2;
+    }
 `;
 
 const SortWrapper = styled.div`
-    width: 200px;
+    width: 50%;
     display: flex;
     justify-content: flex-end;
-    flex-direction: column;
+    padding: 0 2rem 3rem 0;
+    @media ( min-width: ${mobileWidth} ) {
+        width: 100%; 
+        margin-right: 2rem;
+    }
+`;
+
+const SortItem = styled.div`
+    width: 160px;
 `;
 
 const StyledText = styled.p`
@@ -43,6 +56,7 @@ const StyledText = styled.p`
 
 const StyledButton = styled.button`
     display: block;
+    width: 100%;
     margin-bottom: 1rem;
     border: 1px solid #777;
     border-radius: 0.5rem;
@@ -102,41 +116,39 @@ const Root = () => {
         <>
             <GlobalStyle/>
             <PageWrapper>
-                <HeadWrapper>
-                    <SortWrapper>
+                <FiltersWrapper>
+                    <StyledText>Data sources: </StyledText>
+                    { defaultFilters.map((item) => (
+                        <Checkbox
+                            key={item}
+                            name={item}
+                            onChange={checkboxChangeHandler}
+                        >
+                            {item}
+                        </Checkbox>
+                    ))}
+                </FiltersWrapper>
+                <SortWrapper>
+                    <SortItem>
                         <StyledText>Sort by date: </StyledText>
                         <StyledButton active={ sortType === 'newest'} onClick={() => sortChangeHandler('newest')}> Newest </StyledButton>
                         <StyledButton active={ sortType === 'oldest'} onClick={() => sortChangeHandler('oldest')}> Oldest </StyledButton>
-                    </SortWrapper>
-                </HeadWrapper>
-                <MainWrapper>
-                    <FiltersWrapper>
-                        <StyledText>Data sources: </StyledText>
-                        { defaultFilters.map((item) => (
-                            <Checkbox
-                                key={item}
-                                name={item}
-                                onChange={checkboxChangeHandler}
-                            >
-                                {item}
-                            </Checkbox>
-                        ))}
-                    </FiltersWrapper>
-                    <ArticlesWrapper>
-                    { articles.length ? articles.map(({id, date, image, preamble, title, category}) => (
-                        activeFilters.includes(category) &&
-                        <ArticleItem
-                            key={id}
-                            id={id}
-                            date={date}
-                            image={image}
-                            preamble={preamble}
-                            title={title}
-                        />
-                    )) : <><h2>loading...</h2><h3>Please refresh the page if the application will not respond for a long time...</h3></> }
-                    { !activeFilters.length && <h3>Please choose correct data source...</h3> }
-                    </ArticlesWrapper>
-                </MainWrapper>
+                    </SortItem>
+                </SortWrapper>
+                <ArticlesWrapper>
+                { articles.length ? articles.map(({id, date, image, preamble, title, category}) => (
+                    activeFilters.includes(category) &&
+                    <ArticleItem
+                        key={id}
+                        id={id}
+                        date={date}
+                        image={image}
+                        preamble={preamble}
+                        title={title}
+                    />
+                )) : <><h2>loading...</h2><h3>Please refresh the page if the application will not respond for a long time...</h3></> }
+                { !activeFilters.length && <h3>Please choose correct data source...</h3> }
+                </ArticlesWrapper>
             </PageWrapper>
         </>
     );
