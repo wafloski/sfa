@@ -101,7 +101,6 @@ const Root = () => {
     const checkboxChangeHandler = (isChecked, name) => isChecked ? setActiveFilters([...activeFilters, name]) : setActiveFilters(activeFilters.filter(item => item !== name));
 
     const sortChangeHandler = (sortType) => {
-        console.log(sortType);
         if (sortType === 'oldest') {
             articles.sort((a, b) => (Date.parse(dateTransformer(a.date))) - (Date.parse(dateTransformer(b.date))));
             setSortType('oldest');
@@ -131,8 +130,8 @@ const Root = () => {
                 <SortWrapper>
                     <SortItem>
                         <StyledText>Sort by date: </StyledText>
-                        <StyledButton active={ sortType === 'newest'} onClick={() => sortChangeHandler('newest')}> Newest </StyledButton>
-                        <StyledButton active={ sortType === 'oldest'} onClick={() => sortChangeHandler('oldest')}> Oldest </StyledButton>
+                        <StyledButton active={ sortType === 'newest'} onClick={() => sortChangeHandler('newest')}>Newest </StyledButton>
+                        <StyledButton active={ sortType === 'oldest'} onClick={() => sortChangeHandler('oldest')}>Oldest </StyledButton>
                     </SortItem>
                 </SortWrapper>
                 <ArticlesWrapper>
