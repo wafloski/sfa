@@ -4,9 +4,22 @@ import styled from 'styled-components';
 import GlobalStyle from '../../theme/GlobalStyle';
 import ArticleItem from '../../components/ArticleItem';
 import Checkbox from '../../components/Checkbox';
+import dateTransformer from '../../helpers/dateTransformHelper'
+
+const PageWrapper = styled.div`
+  display: flex;
+`;
 
 const ArticlesWrapper = styled.div`
   
+`;
+
+const FiltersWrapper = styled.div`
+  width: 240px;
+`;
+
+const SortWrapper = styled.div`
+
 `;
 
 const defaultFilters = ['fashion','sport'];
@@ -41,28 +54,36 @@ const Root = () => {
     return (
         <>
             <GlobalStyle/>
-            { defaultFilters.map((item) => (
-                <Checkbox
-                    key={item}
-                    name={item}
-                    onChange={checkboxChangeHandler}
-                >
-                    {item}
-                </Checkbox>
-            ))}
-            <ArticlesWrapper>
-            { articles.length ? articles.map(({id, date, image, preamble, title, category}) => (
-                activeFilters.includes(category) &&
-                <ArticleItem
-                    key={id}
-                    id={id}
-                    date={date}
-                    image={image}
-                    preamble={preamble}
-                    title={title}
-                />
-            )) : <><h2>loading...</h2><h3>Please refresh the page if the application will not respond for a long time...</h3></> }
-            </ArticlesWrapper>
+            <PageWrapper>
+                <FiltersWrapper>
+                    <p>Data source:</p>
+                    { defaultFilters.map((item) => (
+                        <Checkbox
+                            key={item}
+                            name={item}
+                            onChange={checkboxChangeHandler}
+                        >
+                            {item}
+                        </Checkbox>
+                    ))}
+                </FiltersWrapper>
+                <ArticlesWrapper>
+                { articles.length ? articles.map(({id, date, image, preamble, title, category}) => (
+                    activeFilters.includes(category) &&
+                    <ArticleItem
+                        key={id}
+                        id={id}
+                        date={date}
+                        image={image}
+                        preamble={preamble}
+                        title={title}
+                    />
+                )) : <><h2>loading...</h2><h3>Please refresh the page if the application will not respond for a long time...</h3></> }
+                </ArticlesWrapper>
+                <SortWrapper>
+
+                </SortWrapper>
+            </PageWrapper>
         </>
     );
 };
