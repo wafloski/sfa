@@ -27,7 +27,7 @@ const defaultFilters = ['fashion','sport'];
 const Root = () => {
     const [ articles, setArticles ] = useState([]);
     const [ activeFilters, setActiveFilters ] = useState(defaultFilters);
-    const [ sort, setSort ] = useState('newest');
+    const [ sortType, setSortType ] = useState('newest');
 
     useEffect(() => {
         fetchArticles()
@@ -50,6 +50,16 @@ const Root = () => {
     };
 
     const checkboxChangeHandler = (isChecked, name) => isChecked ? setActiveFilters([...activeFilters, name]) : setActiveFilters(activeFilters.filter(item => item !== name));
+
+    const sortChangeHandler = (sortType) => {
+        console.log(sortType);
+        if (sortType === 'oldest') {
+            articles.sort((a, b) => (Date.parse(dateTransformer(a.date))) - (Date.parse(dateTransformer(b.date))));
+        } else {
+            articles.sort((a, b) => (Date.parse(dateTransformer(b.date))) - (Date.parse(dateTransformer(a.date))));
+        }
+        setArticles([...articles]);
+    };
 
     return (
         <>
@@ -81,7 +91,9 @@ const Root = () => {
                 )) : <><h2>loading...</h2><h3>Please refresh the page if the application will not respond for a long time...</h3></> }
                 </ArticlesWrapper>
                 <SortWrapper>
-
+                    <p>Sort by date: </p>
+                    <button onClick={() => sortChangeHandler('newest')}> Newest </button>
+                    <button onClick={() => sortChangeHandler('oldest')}> Oldest </button>
                 </SortWrapper>
             </PageWrapper>
         </>

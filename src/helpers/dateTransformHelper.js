@@ -10,7 +10,7 @@ const languageChangerHelper = (dateString) => {
         case 'april':
             return 'apr';
         case 'mai':
-            return 'mai';
+            return 'may';
         case 'juni':
             return 'jun';
         case 'juli':
