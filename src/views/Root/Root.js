@@ -1,8 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import styled from 'styled-components';
 import GlobalStyle from '../../theme/GlobalStyle';
 import ArticleItem from '../../components/ArticleItem';
 import Checkbox from '../../components/Checkbox';
+
+const ArticlesWrapper = styled.div`
+  
+`;
 
 const Root = () => {
     const defaultFilterSettings = [
@@ -40,7 +45,7 @@ const Root = () => {
             })
     };
 
-    const checkboxChangeHandler = (name, isChecked) => {
+    const checkboxChangeHandler = (isChecked, name) => {
         const newFilters = filters.map(item => {
             if ( item.name === name ) {
                 return {
@@ -59,13 +64,14 @@ const Root = () => {
             <GlobalStyle/>
             { defaultFilterSettings.map(({name}) => (
                 <Checkbox
-                    name={name}
                     key={name}
-                    checkboxChangeHandler={checkboxChangeHandler}
+                    name={name}
+                    onChange={checkboxChangeHandler}
                 >
                     {name}
                 </Checkbox>
             ))}
+            <ArticlesWrapper>
             { articles.length ? articles.map(({id, date, image, preamble, title}) => (
                 <ArticleItem
                     key={id}
@@ -76,6 +82,7 @@ const Root = () => {
                     title={title}
                 />
             )) : <><h2>loading...</h2><h3>Please refresh the page if the application will not respond for a long time...</h3></> }
+            </ArticlesWrapper>
         </>
     );
 };

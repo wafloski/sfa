@@ -1,16 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 
-const Checkbox = ({children, checkboxChangeHandler, name, ...props}) => {
-    const [ isChecked, setChecked ] = useState(true);
-
-    const handleCheckboxChange = () => {
-        setChecked(isChecked => !isChecked);
-        checkboxChangeHandler(name, isChecked);
-    };
-
+const Checkbox = ({children, name, onChange}) => {
     return (
         <label>
-            <input type="checkbox" checked={isChecked} {...props} onChange={handleCheckboxChange}/>
+            <input type="checkbox" name={name} defaultChecked={true} onChange={(e) => onChange(e.target.checked, name)}/>
             {children}
         </label>
     )
