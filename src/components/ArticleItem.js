@@ -1,32 +1,68 @@
 import React from 'react';
+import styled from 'styled-components';
 
-const wrapperStyles = {
-    display: 'flex'
-};
+const ArticleWrapper = styled.div`
+    display: flex;
+    margin-bottom: 3rem;
+    transition: .2s;
+    min-height: 180px;
+    &:hover {
+        opacity: 0.9;
+    }
+`;
 
-const imageColStyles = {
-    width: '25%'
-};
+const ArticleImageWrapper = styled.div`
+    width: 280px;
+`;
 
-const contentColStyles = {
-    width: '75%'
-};
+const ArticleContentWrapper = styled.div`
+    padding: 0;
+    margin: 0 20px;
+    width: calc(100% - 280px);
+`;
 
-const imageStyles = {
-    maxWidth: '100%'
-};
+const StyledImage = styled.img`
+    width: 280px;
+`;
+
+const StyledNotFound = styled.p`
+    text-align: center;
+    width: 280px;
+    margin-top: 4rem;
+`;
+
+const ArticleHeading = styled.div`
+    display: flex;
+    justify-content: space-between;
+`;
+
+const ArticleTitle = styled.h2`
+    margin-top: 0;
+`;
+
+const ArticleDate = styled.p`
+    text-align: right;
+    margin: 0 0 0 3rem;
+    white-space: nowrap;
+`;
+
+const ArticlePreamble = styled.p`
+    font-size: 1.5rem;
+`;
 
 const ArticleItem = ({id, date, image, preamble, title}) => (
-    <div className="wrapper" style={wrapperStyles}>
-        <div className="image" style={imageColStyles}>
-            { image ? <img src={image} alt={id} style={imageStyles}/> : 'image not found :(' }
-        </div>
-        <div className="content" style={contentColStyles}>
-            <h2>{title}</h2>
-            <p>{preamble}</p>
-            <p>{date}</p>
-        </div>
-    </div>
+    <ArticleWrapper>
+        <ArticleImageWrapper>
+            { image ? <StyledImage src={image} alt={id} /> : <StyledNotFound>image not found :(</StyledNotFound> }
+        </ArticleImageWrapper>
+        <ArticleContentWrapper>
+            <ArticleHeading>
+                <ArticleTitle>{title}</ArticleTitle>
+                <ArticleDate>{date}</ArticleDate>
+            </ArticleHeading>
+            <ArticlePreamble>{preamble}</ArticlePreamble>
+        </ArticleContentWrapper>
+    </ArticleWrapper>
 );
 
 export default ArticleItem;
