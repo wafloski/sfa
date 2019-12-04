@@ -16,4 +16,9 @@ The server has 2 endpoints:
 ## App Running
 
 To run the frontend part do:
-> `$ npm run start`
+> `$ npm install`
+
+and then:
+> `$ npm start`
+
+App will start on port `3000`.
